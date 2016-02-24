@@ -4,6 +4,7 @@ import com.jme3.app.SimpleApplication;
 import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector3f;
+import com.jme3.renderer.Camera;
 import com.jme3.renderer.RenderManager;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
@@ -29,7 +30,13 @@ public class Main extends SimpleApplication {
 
     @Override
     public void simpleInitApp() {
-
+            
+        // FlyCam settings
+        flyCam.setMoveSpeed(10f);
+        flyCam.setZoomSpeed(10f);
+        cam.setLocation( new Vector3f( 0f,20f,20f));
+        cam.lookAt(Vector3f.ZERO, Vector3f.ZERO);
+        
         
         // Creating the floor
         Box floorBox = new Box(33f,1f,33f);
@@ -44,7 +51,8 @@ public class Main extends SimpleApplication {
         Node creepNode = new Node("creepNode");
         Node towerNode = new Node("towerNode");
         
-        Box baseBox = new Box(2f,5f,2f);
+        // Player base
+        Box baseBox = new Box(3f ,2f ,3f);
         Material yellowMat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
         yellowMat.setColor("Color", ColorRGBA.Yellow);
         Geometry playerBase = new Geometry("playerBase", baseBox);
@@ -54,15 +62,13 @@ public class Main extends SimpleApplication {
         playerBase.setLocalTranslation(0f,0f,0f);
 
         
-        
-        Box towerBox = new Box(1f, 3f, 1f);
-        Material greenMat = new Material( assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
-        Geometry playerTower = new Geometry("playerTower", towerBox);
-        greenMat.setColor("Color", ColorRGBA.Green);
-        playerTower.setMaterial(greenMat);
-        towerNode.attachChild(playerTower);
+
+        // Towers
+        Tower myTower = new Tower(assetManager, towerNode, new Vector3f(-4f, 0f, 7f));
+        Tower otherTower = new Tower(assetManager, towerNode, new Vector3f(4f, 0f, 7f));
         rootNode.attachChild(towerNode);
-        
+       
+        // Box
         Box creepBox = new Box(1f, 1f, 1f);
         Geometry creep = new Geometry("creepBox", creepBox);
         Material blackMat = new Material( assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
