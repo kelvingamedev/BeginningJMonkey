@@ -10,13 +10,12 @@ import com.jme3.math.Vector3f;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
 import com.jme3.scene.shape.Box;
-import sun.org.mozilla.javascript.internal.ast.CatchClause;
 
 /**
  *
  * @author GAMEOVER
  */
-public abstract class ConcretObject {
+public abstract class ConcretObject implements IInstance {
 
     protected Box box;
     protected Material mat;
@@ -42,4 +41,6 @@ public abstract class ConcretObject {
     protected abstract void CreateSimple(AssetManager assetManager, Node objectNode);
 
     protected abstract void CatchErrorInConstructor(Exception ex);
+
+    public abstract int getNumInstance();
 }

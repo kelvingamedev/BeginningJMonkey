@@ -21,7 +21,7 @@ public class Tower extends ConcretObject {
     public static final float X_SCALE = 1f;
     public static final float Y_SCALE = 3f;
     public static final float Z_SCALE = 1f;
-    public static int numOfInstances;
+    private static int numOfInstances;
 
 
     
@@ -47,6 +47,11 @@ public class Tower extends ConcretObject {
         geometry = new Geometry("Tower" + numOfInstances, box);
         geometry.setMaterial(mat);
         towerNode.attachChild(geometry);
+    }
+
+    @Override
+    public int getNumInstance() {
+        return numOfInstances;
     }
     
     
