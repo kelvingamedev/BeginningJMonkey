@@ -33,14 +33,14 @@ public class Main extends SimpleApplication {
     public void simpleInitApp() {
         
         // SimpleApplication settings
-        this.setDisplayFps(false);
-        this.setDisplayStatView(false);
+        //this.setDisplayFps(false);
+        //this.setDisplayStatView(false);
         
         // FlyCam settings
         flyCam.setMoveSpeed(10f);
         flyCam.setZoomSpeed(10f);
         cam.setLocation(new Vector3f(0f, 20f, 20f));
-        cam.lookAt(Vector3f.ZERO, Vector3f.ZERO);
+        cam.lookAt(new Vector3f(0f, -20f, 0f), new Vector3f(0f, 0f, 0f));
 
 
         // Creating the floor
