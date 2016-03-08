@@ -8,6 +8,8 @@ package mygame;
  *
  * @author GAMEOVER
  */
-public interface IUseFollowingNode {
-    NodesEnum getMyNode();
+public final class IndexKeys {
+    public static final String HEALTH_KEY = "health";
+    public static final String SPEED_KEY = "speed";
 }
+

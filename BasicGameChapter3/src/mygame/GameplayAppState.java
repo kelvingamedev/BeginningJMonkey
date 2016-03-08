@@ -8,8 +8,6 @@ import com.jme3.app.Application;
 import com.jme3.app.SimpleApplication;
 import com.jme3.app.state.AbstractAppState;
 import com.jme3.app.state.AppStateManager;
-import com.jme3.scene.Node;
-import com.jme3.scene.Spatial;
 import com.jme3.scene.control.Control;
 
 /**
@@ -24,42 +22,7 @@ public class GameplayAppState extends AbstractAppState {
     private int score;
     private float budget;
     private boolean lastGameWon;
-    private Node playerNode;
-    private Node creepNode;
-    private Node towerNode;
 
-    public void attachOnNode(NodesEnum nodeChoice, Spatial mySpatial) {
-        switch (nodeChoice) {
-            case CreepNode:
-                creepNode.attachChild(mySpatial);
-                break;
-
-            case PlayerNode:
-                playerNode.attachChild(mySpatial);
-                break;
-
-            case TowerNode:
-                towerNode.attachChild(mySpatial);
-                break;
-        }
-    }
-
-    public void addControl(NodesEnum nodeChoice, Control myControl) {
-
-        switch (nodeChoice) {
-            case CreepNode:
-                creepNode.addControl(myControl);
-                break;
-
-            case PlayerNode:
-                playerNode.addControl(myControl);
-                break;
-
-            case TowerNode:
-                towerNode.addControl(myControl);
-                break;
-        }
-    }
     
 
     public int getPlayerHealth() {
@@ -91,24 +54,10 @@ public class GameplayAppState extends AbstractAppState {
     @Override
     public void initialize(AppStateManager stateManager, Application app) {
         super.initialize(stateManager, app);
-        this.simpleApp = (SimpleApplication) app;
-        // Nodes creation
-        playerNode = new Node("playerNode");
-        creepNode = new Node("creepNode");
-        towerNode = new Node("towerNode");
-
-        // Nodes attach to rootNode
-        simpleApp.getRootNode().attachChild(creepNode);
-        simpleApp.getRootNode().attachChild(playerNode);
-        simpleApp.getRootNode().attachChild(towerNode);
-       
+        this.simpleApp = (SimpleApplication) app;   
         setUserData();
     }
-    
-    // Stop to show control in scene
-    public void removeControl(Control control){
-        simpleApp.getRootNode().removeControl(control);
-    }
+
 
     @Override
     public void update(float tpf) {

@@ -6,11 +6,10 @@ package mygame;
 
 /**
  *
+ * Used to require data necessary to the user in the class who implement
+ * 
  * @author GAMEOVER
  */
-public interface IInstance {
-    
-    int getNumOfInstances();
-    int getCurrentIndex();
-    void increaseNumOfInstances();
+public interface IUserData {
+    void setUserData();
 }

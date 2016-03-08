@@ -22,25 +22,26 @@ public class NodesAppState extends AbstractAppState {
     private Node playerNode;
     private Node rootNode;
 
-    public void attachOnTowerNode(Spatial spatial) {
-        towerNode.attachChild(spatial);
+    public Node getTowerNode() {
+        return towerNode;
     }
 
-    public void attachOnCreepNode(Spatial spatial) {
-       creepNode.attachChild(spatial);
+    public Node getCreepNode() {
+        return creepNode;
     }
 
-    public void attachOnPlayerNode(Spatial spatial) {
-        playerNode.attachChild(spatial);
+    public Node getPlayerNode() {
+        return playerNode;
     }
 
     public Node getRootNode() {
         return rootNode;
     }
-    
-    public NodesAppState(){
-        towerNode = new Node("towerNode");
+
+    public NodesAppState() {
+
         creepNode = new Node("creepNode");
+        towerNode = new Node("towerNode");
         playerNode = new Node("playerNode");
     }
 
@@ -49,10 +50,15 @@ public class NodesAppState extends AbstractAppState {
         super.initialize(stateManager, app);
         SimpleApplication simpleApp = (SimpleApplication) app;
         this.rootNode = simpleApp.getRootNode();
-               
+
         // Set All nodes in root node here
         this.rootNode.attachChild(creepNode);
         this.rootNode.attachChild(towerNode);
         this.rootNode.attachChild(playerNode);
+    }
+
+    @Override
+    public void cleanup() {
+        this.rootNode.detachAllChildren();
     }
 }

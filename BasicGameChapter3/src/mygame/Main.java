@@ -17,6 +17,7 @@ import com.jme3.system.AppSettings;
 public class Main extends SimpleApplication {
 
     private NodesAppState nodesAppState;
+    private GameplayAppState gmAppState;
     private static final Vector3f camFixedPOS = (new Vector3f(0f, 20f, 20f));
 
     public static void main(String[] args) {
@@ -28,7 +29,8 @@ public class Main extends SimpleApplication {
     public void simpleInitApp() {
         nodesAppState = new NodesAppState();
         this.stateManager.attach(nodesAppState);
-
+        gmAppState = new GameplayAppState();
+        this.stateManager.attach(gmAppState);
 
         // FlyCam settings
         flyCam.setMoveSpeed(10f);
@@ -52,15 +54,18 @@ public class Main extends SimpleApplication {
         Simple3DPlayerBaseModel playerBase = new Simple3DPlayerBaseModel(nodesAppState, assetManager, Vector3f.ZERO);
 
         // Place Towers    
-        Simple3DTowerModel myTower = new Simple3DTowerModel(nodesAppState,assetManager, new Vector3f(-4f, 0f, 7f));
-        Simple3DTowerModel otherTower = new Simple3DTowerModel(nodesAppState,assetManager, new Vector3f(4f, 0f, 7f));
+        Simple3DTowerModel myTower = new Simple3DTowerModel(nodesAppState, assetManager, new Vector3f(-4f, 0f, 7f));
+        Simple3DTowerModel otherTower = new Simple3DTowerModel(nodesAppState, assetManager, new Vector3f(4f, 0f, 7f));
 
         // Create creeps
-        Simple3DCreepModel[] creeps = new Simple3DCreepModel[5];
+        Geometry[] creeps = new Geometry[5];
         int i = 0;
-        float posZ = 10f;
+        float posZ = 20f;
         while (i < 5) {
-            creeps[i] = new Simple3DCreepModel(nodesAppState,assetManager, new Vector3f(0f, 0f, posZ));
+            creeps[i] = Simple3DCreepModel.create(assetManager, new Vector3f(0f, 0f, posZ));
+            creeps[i].addControl(new CreepControl(gmAppState, nodesAppState));
+            creeps[i].getControl(CreepControl.class).setUserData();
+            nodesAppState.getCreepNode().attachChild(creeps[i]);
             i++;
             posZ += 3f;
         }
