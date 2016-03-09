@@ -54,8 +54,15 @@ public class Main extends SimpleApplication {
         Simple3DPlayerBaseModel playerBase = new Simple3DPlayerBaseModel(nodesAppState, assetManager, Vector3f.ZERO);
 
         // Place Towers    
-        Simple3DTowerModel myTower = new Simple3DTowerModel(nodesAppState, assetManager, new Vector3f(-4f, 0f, 7f));
-        Simple3DTowerModel otherTower = new Simple3DTowerModel(nodesAppState, assetManager, new Vector3f(4f, 0f, 7f));
+        Geometry myTower = Simple3DTowerModel.create(assetManager, new Vector3f(-4f, 0f, 7f));
+        myTower.addControl(new TowerControl(nodesAppState, gmAppState));
+        myTower.getControl(TowerControl.class).setUserData();
+        nodesAppState.getTowerNode().attachChild(myTower);
+        
+        Geometry otherTower = Simple3DTowerModel.create(assetManager, new Vector3f(4f, 0f, 7f));
+        otherTower.addControl(new TowerControl(nodesAppState, gmAppState));
+        otherTower.getControl(TowerControl.class).setUserData();
+        nodesAppState.getTowerNode().attachChild(otherTower);
 
         // Create creeps
         Geometry[] creeps = new Geometry[5];

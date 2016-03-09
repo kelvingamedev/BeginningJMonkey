@@ -32,9 +32,9 @@ public class CreepControl extends AbstractControl {
         spatial.setUserData(IndexKeys.SPEED_KEY, speed);
     }
 
-    public void decreaseHealth() {
+    public void decreaseHealth(Charge takedShoot) {
         setHealth(getHealth() - FastMath.nextRandomInt(
-                MIN_HEALTH_DECREASE, MAX_HEALTH_DECREASE));
+                takedShoot.minDamage, takedShoot.maxDamage));
     }
 
     private void setHealth(int health) {
@@ -88,12 +88,15 @@ public class CreepControl extends AbstractControl {
                 setStopToMove(true);
             }
         }
-
+        
+        // Creep dies
         if (getHealth() <= 0) {
             gmAppState.scoreForPlayerKill();
             nodesAppStates.getCreepNode().detachChild(spatial);
+            
+        // Creep causes damage    
         } else if (spatial.getLocalTranslation().z <= Simple3DPlayerBaseModel.Z_SCALE + Simple3DCreepModel.Z_SCALE) {
-            gmAppState.decreaseHealth();
+            gmAppState.decreaseHealth(); // What about the player health stay at playerNode?
             nodesAppStates.getCreepNode().detachChild(spatial);
         }
 

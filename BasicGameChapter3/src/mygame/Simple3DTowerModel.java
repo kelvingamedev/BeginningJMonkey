@@ -16,30 +16,30 @@ import com.jme3.scene.shape.Box;
  *
  * @author GAMEOVER
  */
-public class Simple3DTowerModel implements ISimple3DModel {
+public class Simple3DTowerModel{
 
     public static final float X_SCALE = 1f;
     public static final float Y_SCALE = 3f;
     public static final float Z_SCALE = 1f;
     private Geometry geometry;
 
-    /*
+    /**
      * Instantiates a simple tower model  and attach it in the scene
      */
-    public Simple3DTowerModel(NodesAppState nodesAppState, AssetManager assetManager, Vector3f pos) {
-        this.geometry = createSimple3DModel(assetManager);
+    public Simple3DTowerModel(AssetManager assetManager, Vector3f pos) {
+        this.geometry = create(assetManager, pos);
         this.geometry.setLocalTranslation(pos);
-        nodesAppState.getTowerNode().attachChild(geometry);
 
     }
 
-    public Geometry createSimple3DModel(AssetManager assetManager) {
+    public static Geometry create(AssetManager assetManager, Vector3f pos) {
         Box box = new Box(X_SCALE, Y_SCALE, Z_SCALE);
         Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
         mat.setColor("Color", ColorRGBA.Green);
-        Geometry geometry = new Geometry("Tower", box);
-        geometry.setMaterial(mat);
-        return geometry;
+        Geometry tower = new Geometry("Tower", box);
+        tower.setMaterial(mat);
+        tower.setLocalTranslation(pos);
+        return tower;
     }
 
     public Geometry getGeometry() {
